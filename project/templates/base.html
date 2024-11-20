@@ -1,13 +1,23 @@
+<head>
+    <link href="{{ url_for('static', filename='style.css') }}" rel="stylesheet">
+</head>
+
 <header>
     <nav>
-        <ul>
-            <li><a href="#">Anasayfa</a></li>
-            <li><a href="#">Yazılar</a></li>
-            <li><a href="#">Forum</a></li>
+         <ul class="nav">
+            <li><a href="{{ url_for('home') }}">Anasayfa</a></li>
+            <li><a href="{{ url_for('posts') }}">Yazılar</a></li>
+            <li><a href="{{ url_for('forum') }}">Forum</a></li>
+            <li><a href="{{ url_for('create_blog') }}">Post Oluştur</a></li>
+            <li><a href="{{ url_for('register') }}">Kayıt Ol</a></li>
+            <li><a href="{{ url_for('login') }}">Giriş Yap</a></li>
         </ul>
     </nav>
 </header>
 
+{% block content %}
+
+{% endblock %}
 
 <footer>
     <p> Copyright © | Tüm haklar saklıdır 2024</p>

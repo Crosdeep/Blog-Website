@@ -3,21 +3,15 @@
 {% block content%}
 <form method="post">
     {{ form.hidden_tag() }}
-    <div>
-        {{ form.username.label }}
-        {{ form.username() }}
-
-        {{ form.email.label }}
-        {{ form.email() }}
-
-        {{ form.password.label }}
-        {{ form.password() }}
-
-        {{ form.pass_confirm.label }}
-        {{ form.pass_confirm() }}
-
+    <div class="post-form">
+      <p>{{ form.username.label }} {{ form.username() }} </p>
+        <p>{{ form.email.label }} {{ form.email() }} </p>
+        <p>{{ form.password.label }} {{ form.password() }}</p>
+        <p>{{ form.pass_confirm.label }} {{ form.pass_confirm() }}</p>
         {{ form.submit() }}
     </div>
 </form>
+<a href="{{ url_for('home') }}">Geri Dön</a>
+
 
 {% endblock %}
