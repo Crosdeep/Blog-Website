@@ -1,10 +1,6 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <title>Title</title>
-</head>
-<body>
-<h1>Page not found, 404</h1>
-</body>
-</html>
+{% block title %}Sayfa Bulunamadı{% endblock %}
+
+{% block content %}
+<h1>404 - Sayfa Bulunamadı</h1>
+<p>Aradığınız sayfa mevcut değil. Anasayfaya dönmek için <a href="{{ url_for('home') }}">tıklayın</a>.</p>
+{% endblock %}

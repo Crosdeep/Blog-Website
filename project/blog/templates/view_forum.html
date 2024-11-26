@@ -1,0 +1,22 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>{{ forum.title }}</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='styles.css') }}">
+</head>
+<body>
+    <div class="container">
+        <h1>{{ forum.title }}</h1>
+        <p><strong>Yayınlanma Tarihi:</strong> {{ forum.created_at }}</p>
+        <p>{{ forum.content }}</p>
+
+        <a href="{{ url_for('forum') }}">Geri dön</a>
+    </div>
+
+    <footer>
+        <p>© 2024 BlogSite. Tüm hakları saklıdır.</p>
+    </footer>
+</body>
+</html>

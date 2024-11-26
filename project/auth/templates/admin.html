@@ -1,0 +1,98 @@
+{% extends "base.html" %}
+
+{% block content %}
+<div class="container mt-5">
+    <h2>Admin Paneli</h2>
+
+    <!-- Kullanıcılar -->
+    <h3>Kullanıcılar</h3>
+    <table class="table">
+        <thead>
+            <tr>
+                <th>#</th>
+                <th>Kullanıcı Adı</th>
+                <th>Email</th>
+                <th>Rolü</th>
+                <th>Kayıt Tarihi</th>
+                <th>İşlemler</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for user in users %}
+            <tr>
+                <td>{{ user.id }}</td>
+                <td>{{ user.username }}</td>
+                <td>{{ user.email }}</td>
+                <td>{{ user.role }}</td>
+                <td>{{ user.created_at.strftime('%B %d, %Y') }}</td>
+                <td>
+                    {% if user.role != 'admin' %}
+                        <a href="{{ url_for('make_admin', user_id=user.id) }}" class="btn btn-success btn-sm">Admin Yap</a>
+                    {% else %}
+                        <span class="btn btn-secondary btn-sm disabled">Admin</span>
+                    {% endif %}
+                </td>
+            </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+
+    <!-- Bloglar -->
+    <h3>Bloglar</h3>
+    <table class="table">
+        <thead>
+            <tr>
+                <th>#</th>
+                <th>Başlık</th>
+                <th>Yazan</th>
+                <th>Tarih</th>
+                <th>İşlemler</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for blog in blogs %}
+            <tr>
+                <td>{{ blog.id }}</td>
+                <td>{{ blog.title }}</td>
+                <td>{{ blog.user.username }}</td>
+                <td>{{ blog.created_at.strftime('%B %d, %Y') }}</td>
+                <td>
+                    <a href="{{ url_for('edit_blog', blog_id=blog.id) }}" class="btn btn-warning btn-sm">Düzenle</a>
+                    <a href="{{ url_for('delete_blog', blog_id=blog.id) }}" class="btn btn-danger btn-sm">Sil</a>
+                </td>
+            </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+
+    <!-- Yorumlar -->
+    <h3>Yorumlar</h3>
+    <table class="table">
+        <thead>
+            <tr>
+                <th>#</th>
+                <th>Başlık</th>
+                <th>İçerik</th>
+                <th>Blog</th>
+                <th>Tarih</th>
+                <th>İşlemler</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for comment in comments %}
+            <tr>
+                <td>{{ comment.id }}</td>
+                <td>{{ comment.title }}</td>
+                <td>{{ comment.description }}</td>
+                <td>{{ comment.blog.title }}</td>
+                <td>{{ comment.created_at.strftime('%B %d, %Y') }}</td>
+                <td>
+                    <a href="{{ url_for('edit_comment', comment_id=comment.id) }}" class="btn btn-warning btn-sm">Düzenle</a>
+                    <a href="{{ url_for('delete_comment', comment_id=comment.id) }}" class="btn btn-danger btn-sm">Sil</a>
+                </td>
+            </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+</div>
+{% endblock %}

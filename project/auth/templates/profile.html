@@ -1,0 +1,36 @@
+{% extends "base.html" %}
+
+
+{% block content %}
+<div class="container mt-5">
+    <div class="row">
+        <!-- Kullanıcı Bilgileri (Sol Taraf) -->
+        <div class="col-md-6">
+            <div class="card">
+                <div class="card-body">
+                    <h3>{{ user.username }}</h3>
+                    <p><strong>Email:</strong> {{ user.email }}</p>
+                    <p><strong>Kayıt Olma Tarihi:</strong> {{ user.created_at.strftime('%B %d, %Y') }}</p>
+                    <a href="{{ url_for('edit_profile') }}" class="btn btn-primary">Profili Düzenle</a>
+                </div>
+            </div>
+        </div>
+
+        <!-- Profil Resmi (Sağ Taraf) -->
+        <div class="col-md-6 text-center">
+            <div class="card">
+                <div class="card-body">
+                    <img src="https://via.placeholder.com/150" alt="Profile Picture"
+                         class="rounded-circle img-fluid border border-secondary"
+                         style="width: 150px; height: 150px;">
+                </div>
+                <div class="">
+                     <!--Takip edilen ve takip ettikleri çıkıcak-->
+                </div>
+            </div>
+        </div>
+    </div>
+        <a href="{{ url_for('home') }}"></a>
+
+</div>
+{% endblock %}

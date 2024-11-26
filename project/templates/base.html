@@ -1,24 +1,79 @@
+<!DOCTYPE html>
+<html lang="tr">
 <head>
-    <link href="{{ url_for('static', filename='style.css') }}" rel="stylesheet">
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>BlogSite</title>
+    <!-- Bootstrap CSS -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-QWTKZyjpPEjISv5WaRU9OFeRpok6YctnYmDr5pNlyT2bRjXh0JMhjY6hW+ALEwIH" crossorigin="anonymous">
+    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
 </head>
 
-<header>
-    <nav>
-         <ul class="nav">
-            <li><a href="{{ url_for('home') }}">Anasayfa</a></li>
-            <li><a href="{{ url_for('posts') }}">Yazılar</a></li>
-            <li><a href="{{ url_for('forum') }}">Forum</a></li>
-            <li><a href="{{ url_for('create_blog') }}">Post Oluştur</a></li>
-            <li><a href="{{ url_for('register') }}">Kayıt Ol</a></li>
-            <li><a href="{{ url_for('login') }}">Giriş Yap</a></li>
-        </ul>
+ <!-- Header (Başlık) -->
+    <nav class="navbar navbar-expand-lg navbar-light bg-light">
+        <div class="container">
+            <a class="navbar-brand" href="{{ url_for('home') }}">BlogSite</a>
+            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+            <div class="collapse navbar-collapse" id="navbarNav">
+                <ul class="navbar-nav ms-auto">
+                    {% if current_user.is_authenticated %}
+                        <li class="nav-item">
+                            <a class="nav-link" href="{{ url_for('profile') }}">Profil</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link" href="{{ url_for('create_blog') }}">Blog Yaz</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link" href="{{ url_for('forum') }}">Forum</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link" href="{{ url_for('posts') }}">Post</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link" href="{{ url_for('create_comment') }}">Soru Sor</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link" href="{{ url_for('contact') }}">İletişim</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link" href="{{ url_for('logout') }}">Çıkış Yap</a>
+                        </li>
+                    {% else %}
+                        <li class="nav-item">
+                            <a class="nav-link" href="{{ url_for('login') }}">Giriş Yap</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link" href="{{ url_for('register') }}">Kayıt Ol</a>
+                        </li>
+                    {% endif %}
+                </ul>
+            </div>
+        </div>
     </nav>
-</header>
 
-{% block content %}
+   <!--Main content-->
+   <div class="container mt-4">
+        {% block content %}  {% endblock %}
+    </div>
 
-{% endblock %}
 
-<footer>
-    <p> Copyright © | Tüm haklar saklıdır 2024</p>
-</footer>
+    <!-- Footer -->
+    <footer class="bg-dark text-white text-center py-3">
+        <div>
+            <p>&copy; 2024 BlogSite. Tüm Hakları Saklıdır.</p>
+        </div>
+        <div class="icons d-flex justify-content-center gap-3 mt-2">
+            <i class="bi bi-instagram"><a href="#"></a></i>
+            <i class="bi bi-facebook"><a href="#"></a></i>
+            <i class="bi bi-whatsapp"><a href="#"></a></i>
+            <i class="bi bi-twitter-x"><a href="#"></a></i>
+        </div>
+    </footer>
+
+ <!-- Bootstrap JS ve bağımlılıkları -->
+    <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.11.6/dist/umd/popper.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/js/bootstrap.min.js"></script>
+

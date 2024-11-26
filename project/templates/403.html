@@ -1,11 +1,8 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <title>Title</title>
-</head>
-<body>
-<h1>Forbidden, 403
-</h1>
-</body>
-</html>
+{% block title %}Erişim Engellendi{% endblock %}
+
+{% block content %}
+<h1>403 - Erişim Engellendi</h1>
+<p>Bu sayfaya erişim yetkiniz bulunmamaktadır.</p>
+<p>Yetkiniz olduğunu düşünüyorsanız, lütfen bizimle iletişime geçin.</p>
+<a href="{{ url_for('home') }}" class="btn">Anasayfaya Dön</a>
+{% endblock %}

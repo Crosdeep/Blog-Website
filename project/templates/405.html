@@ -1,0 +1,8 @@
+{% block title %}Yöntem Geçersiz{% endblock %}
+
+{% block content %}
+<h1>405 - Geçersiz Yöntem</h1>
+<p>Üzgünüz, kullandığınız HTTP yöntemi bu sayfa için desteklenmiyor.</p>
+<p>Lütfen geri dönün veya uygun bir bağlantıya tıklayın.</p>
+<a href="{{ url_for('home') }}" class="btn">Anasayfaya Dön</a>
+{% endblock %}

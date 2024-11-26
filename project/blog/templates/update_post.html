@@ -1,0 +1,20 @@
+{% extends "base.html" %}
+
+{% block content %}
+<div class="container mt-5">
+    <h2>Post Güncelle</h2>
+    <form method="POST">
+        {{ form.hidden_tag() }} <!-- CSRF Token -->
+        <div class="form-group mb-3">
+            <label for="title">Başlık</label>
+            {{ form.title(class="form-control") }}
+        </div>
+        <div class="form-group mb-3">
+            <label for="description">Açıklama</label>
+            {{ form.description(class="form-control") }}
+        </div>
+        <button type="submit" class="btn btn-primary">Kaydet</button>
+        <a href="{{ url_for('posts') }}" class="btn btn-secondary">İptal</a>
+    </form>
+</div>
+{% endblock %}
