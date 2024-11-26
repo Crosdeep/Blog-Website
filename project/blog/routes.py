@@ -54,7 +54,7 @@ def create_blog():
         else:
             flash('Giriş yapmanız gerekiyor.', 'danger')
             return redirect(url_for('login'))  # Giriş sayfasına yönlendir
-    return render_template('create_blog.html', form=form)
+    return render_template('create_post.html', form=form)
 
 
 @app.route('/create-comment', methods=['POST','GET'])

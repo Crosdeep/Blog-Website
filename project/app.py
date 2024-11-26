@@ -2,6 +2,7 @@
 from flask import Flask
 from project.config import Config
 from flask_sqlalchemy import SQLAlchemy
+import os
 
 db = SQLAlchemy()
 
@@ -9,7 +10,8 @@ db = SQLAlchemy()
 def create_app():
     print("create_app fonksiyonu çalıştı!")
     app = Flask(__name__)
-    app.config.from_object(Config)
+    app.config['SQLALCHEMY_DATABASE_URI'] = os.environ.get('DATABASE_URL')
+    app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
     db.init_app(app)
 
     from project import auth

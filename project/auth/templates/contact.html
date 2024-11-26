@@ -3,6 +3,18 @@
 {% block content %}
 
 <div class="container">
+      {% with messages = get_flashed_messages(with_categories=true) %}
+            {% if messages %}
+                <div class="alert-container">
+                    {% for category, message in messages %}
+                        <div class="alert alert-{{ category }}">
+                            {{ message }}
+                        </div>
+                    {% endfor %}
+                </div>
+            {% endif %}
+        {% endwith %}
+
         <h2>Contact Us</h2>
         <form action="/submit_contact" method="POST">
             <!-- Name Field -->
@@ -34,5 +46,6 @@
                 <button type="submit">Gönder</button>
             </div>
         </form>
+
     </div>
 {% endblock %}
