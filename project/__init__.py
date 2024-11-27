@@ -2,6 +2,7 @@
 from flask import Flask
 from project.auth import auth
 from project.blog import blog
+from project.admin import admin
 from project.config import Config
 from flask_sqlalchemy import SQLAlchemy
 
@@ -18,6 +19,9 @@ def create_app():
 
     from project.blog import blog
     app.register_blueprint(blog)
+
+    from project.admin import admin
+    app.register_blueprint(admin)
 
     return app
 

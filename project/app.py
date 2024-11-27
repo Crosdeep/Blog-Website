@@ -20,6 +20,9 @@ def create_app():
     from project import blog
     app.register_blueprint(blog)
 
+    from project import admin
+    app.register_blueprint(admin)
+
     print(app.config['SQLALCHEMY_DATABASE_URI'])
     return app
 
