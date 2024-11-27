@@ -1,0 +1,56 @@
+{% extends "base.html" %}
+
+
+{% block content %}
+    <div class="container mt-5">
+        <table class="table">
+        <thead> <!--Bloglar-->
+            <tr>
+                <th>#</th>
+                <th>Başlık</th>
+                <th>Yazan</th>
+                <th>Tarih</th>
+                <th>İşlemler</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for blog in blogs %}
+            <tr>
+                <td>{{ blog.id }}</td>
+                <td>{{ blog.title }}</td>
+                <td>{{ blog.user.username }}</td>
+                <td>{{ blog.created_at.strftime('%B %d, %Y') }}</td>
+                <td>
+                    <a href="{{ url_for('edit_blog', post_id=blog.id) }}" class="btn btn-warning btn-sm">Düzenle</a>
+                    <a href="{{ url_for('delete_blog', post_id=blog.id) }}" class="btn btn-danger btn-sm">Sil</a>
+                </td>
+            </tr>
+            {% endfor %}
+        </tbody>
+             <thead> <!--Yorumlar-->
+            <tr>
+                <th>#</th>
+                <th>Başlık</th>
+                <th>Yazan</th>
+                <th>Tarih</th>
+                <th>İşlemler</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for comment in comments %}
+            <tr>
+                <td>{{ comment.id }}</td>
+                <td>{{ comment.content }}</td>
+                <td>{{ comment.user_id.user_id }}</td>
+                <td>{{ comment.created_at.strftime('%B %d, %Y') }}</td>
+                <td>
+                    <a href="{{ url_for('edit_blog', post_id=blog.id) }}" class="btn btn-warning btn-sm">Düzenle</a>
+                    <a href="{{ url_for('delete_blog', post_id=blog.id) }}" class="btn btn-danger btn-sm">Sil</a>
+                </td>
+            </tr>
+            {% endfor %}
+        </tbody>
+        </table>
+    </div>
+
+{% endblock %}

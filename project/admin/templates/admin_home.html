@@ -1,6 +1,22 @@
 {% extends "base.html" %}
 
 {% block content %}
+<button class="btn btn-primary" type="button" data-bs-toggle="offcanvas" data-bs-target="#offcanvasScrolling" aria-controls="offcanvasScrolling">Enable body scrolling</button>
+
+<div class="offcanvas offcanvas-start" data-bs-scroll="true" data-bs-backdrop="false" tabindex="-1" id="offcanvasScrolling" aria-labelledby="offcanvasScrollingLabel">
+  <div class="offcanvas-header">
+    <h5 class="offcanvas-title" id="offcanvasScrollingLabel">Offcanvas with body scrolling</h5>
+    <button type="button" class="btn-close" data-bs-dismiss="offcanvas" aria-label="Close"></button>
+  </div>
+  <div class="offcanvas-body">
+    <h1>Admin işlemleri</h1>
+      <li><a href="{{ url_for('edit_categorise') }}">Kategori Ekle</a></li>
+      <li><a href="{{ url_for('edit_categorise') }}">İstatislikler</a></li>
+      <li><a href="{{ url_for('edit_categorise') }}">Blog ve Yorum yönetimi</a></li>
+      <li><a href="{{ url_for('edit_categorise') }}">Listelemeler</a></li>
+  </div>
+</div> <!--Yan menü-->
+
 <div class="container mt-5">
     <h2>Admin Paneli</h2>
 
@@ -57,8 +73,8 @@
                 <td>{{ blog.user.username }}</td>
                 <td>{{ blog.created_at.strftime('%B %d, %Y') }}</td>
                 <td>
-                    <a href="{{ url_for('edit_blog', blog_id=blog.id) }}" class="btn btn-warning btn-sm">Düzenle</a>
-                    <a href="{{ url_for('delete_blog', blog_id=blog.id) }}" class="btn btn-danger btn-sm">Sil</a>
+                    <a href="{{ url_for('edit_blog', id=blog.id) }}" class="btn btn-warning btn-sm">Düzenle</a>
+                    <a href="{{ url_for('delete_blog', id=blog.id) }}" class="btn btn-danger btn-sm">Sil</a>
                 </td>
             </tr>
             {% endfor %}
@@ -87,8 +103,8 @@
                 <td>{{ comment.blog.title }}</td>
                 <td>{{ comment.created_at.strftime('%B %d, %Y') }}</td>
                 <td>
-                    <a href="{{ url_for('edit_comment', comment_id=comment.id) }}" class="btn btn-warning btn-sm">Düzenle</a>
-                    <a href="{{ url_for('delete_comment', comment_id=comment.id) }}" class="btn btn-danger btn-sm">Sil</a>
+                    <a href="{{ url_for('edit_comment', id=comment.id) }}" class="btn btn-warning btn-sm">Düzenle</a>
+                    <a href="{{ url_for('delete_comment', id=comment.id) }}" class="btn btn-danger btn-sm">Sil</a>
                 </td>
             </tr>
             {% endfor %}
