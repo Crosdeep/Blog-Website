@@ -1,10 +1,16 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <title>Title</title>
-</head>
-<body>
+{% extends "base.html" %}
 
-</body>
-</html>
+{% block content %}
+
+    <div class="container mt-5">
+        <h1>{{ form.title }}</h1>
+        <p>{{ form.description }}</p>
+        <small>Görüntülenme Sayısı: {{ post.view_count }}</small>
+        <small>Favorilenme Sayısı: {{ post.favorites_count }}</small>
+
+        <form action="{{ url_for('favorite_post', post_id=post.id) }}" method="post">
+            <button type="submit">Favorilere Ekle</button>
+        </form>
+    </div>
+
+{% endblock %}

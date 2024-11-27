@@ -1,0 +1,17 @@
+{% extends "base.html" %}
+
+{% block content %}
+    <div class="container mt-5">
+        <h1>Son Zamanlarda Popüler Postlar</h1>
+        {% for post in populer_posts %}
+            <h1>{{ form.title }}</h1>
+            <p>{{ form.description }}</p>
+            <small>Görüntülenme Sayısı: {{ post.view_count }}</small>
+            <small>Favorilenme Sayısı: {{ post.favorites_count }}</small>
+
+          <form action="{{ url_for('post_Detail', post_id=post.id) }}" method="post">
+            <button type="submit" class="btn btn-success">Devamını Oku</button>
+        </form>
+        {% endfor %}
+    </div>
+{% endblock %}

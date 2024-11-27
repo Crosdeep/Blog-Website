@@ -1,5 +1,6 @@
 from flask_wtf import FlaskForm
 from wtforms import StringField, PasswordField, SubmitField, TextAreaField, HiddenField
+from wtforms.fields.choices import SelectField
 from wtforms.validators import DataRequired, Email, Length, EqualTo, ValidationError
 from flask_wtf.file import FileField, FileAllowed
 
@@ -44,4 +45,6 @@ class ContactForm(FlaskForm):
     email = StringField('Email', validators=[DataRequired(), Email()])
     content = TextAreaField('Açıklama', validators=[DataRequired()])
     submit = SubmitField('Gönder')
+
+
 

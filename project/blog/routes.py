@@ -1,3 +1,5 @@
+from crypt import methods
+
 from flask import Flask, render_template, redirect, url_for, flash, request, Blueprint
 from flask_migrate import Migrate
 from flask_mail import Mail, Message
@@ -14,7 +16,7 @@ migrate = Migrate(app, db)
 from project.auth.models import User
 from project.auth.forms import UserRegister, UserLogin, UserProfileForm
 from project.blog.forms import CreateBlog, ContactForm, CommentForm, UpdatePostForm
-from project.blog.models import BlogPost,Comment,Contact
+from project.blog.models import BlogPost,Comment,Contact, Favorites
 from flask_login import LoginManager, login_required, current_user
 
 
@@ -135,6 +137,43 @@ def forum():
 
     forums = Comment.query.all()  #Tüm yorumları çek
     return render_template('forum.html', forums=forums, form=form)
+
+
+@app.route("/view-post/<int:post_id>", methods=['GET','POST'])
+def view_post(post_id):
+    post = BlogPost.query.get_or_404(post_id)
+    post.view_count += 1
+    db.session.commit()
+    return render_template('post_detail.html', post=post)
+
+
+@app.route("/favorite/<int:post_id>", methods=['GET','POST'])
+def favorites(post_id):
+    post = BlogPost.query.get_or_404(post_id)
+    favorite = user_id=current_user.id, post_id=post.id
+    db.session.add(favorite)
+    post.favorites_count += 1
+    db.session.commit()
+    return redirect(url_for('post_detail', post_id=post.id))
+
+
+@app.route('/favorite/<int:post_id>', methods=['POST'])
+def favorite_post(post_id):
+    post = BlogPost.query.get_or_404(post_id)
+    #kullanıcının bu postu favorileyip favorilemediğini kontrol et
+    existing_favorite = Favorites.query.filter_by(user_id=current_user.id, post_id=post.id).first()
+    if existing_favorite is None:
+        favorite = Favorites(user_id=current_user.id, post_id=post.id)
+        db.session.add(favorite)
+        post.favorites_count += 1
+        db.session.commit()
+    return redirect(url_for('post_detail', post_id=post.id))
+
+@app.route("/populer-posts")
+def populer_posts():
+    populer_posts = BlogPost.query.order_by(BlogPost.view_count.desc()).limit(10).all()
+    return render_template('populer_posts.html', populer_posts=populer_posts)
+
 
 @app.route("/forum/<int:forum_id>")
 def view_forum(forum_id):
