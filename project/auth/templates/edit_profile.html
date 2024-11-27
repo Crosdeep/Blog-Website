@@ -1,3 +1,9 @@
+<head>
+    <link rel="stylesheet" href="/static/index.js">
+</head>
+
+
+
 {% extends "base.html" %}
 
 
@@ -25,15 +31,15 @@
 
                         <div class="form-group">
                             {{ form.password.label }}
-                            {{ form.password(class="form-control", placeholder="Enter new password (optional)") }}
+                            {{ form.password(class="form-control", placeholder="Yeni Şifre Girin (isteğe bağlı)") }}
                         </div>
 
                         <div class="form-group">
                             {{ form.confirm_password.label }}
-                            {{ form.confirm_password(class="form-control", placeholder="Confirm new password") }}
+                            {{ form.confirm_password(class="form-control", placeholder="Şifreyi Onaylayın") }}
                         </div>
 
-                        <button type="submit" class="btn btn-success btn-block">Save Changes</button>
+                        <button type="submit" class="btn btn-success btn-block" onclick="saveChanges()">Değişiklikleri Kaydet</button>
                     </form>
                     <a href="{{ url_for('profile') }}"></a>
 
