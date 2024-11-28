@@ -46,6 +46,7 @@ def admin_panel():
 def edit_categories():
 
     form = EditCategories()
+
     if form.validate_on_submit():
         categorie_name = form.categori_name.data
         new_categorie = EditCategories( categorie_name=categorie_name)

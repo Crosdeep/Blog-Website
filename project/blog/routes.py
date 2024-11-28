@@ -104,6 +104,12 @@ def delete_post(post_id):
     flash('Post başarıyla silindi.', 'success')
     return redirect(url_for('posts'))
 
+@app.route("/deleted-post", methods=['GET','POST'])
+def deleted_post():
+    #devam edecek
+    pass
+
+
 @app.route('/update_post/<int:post_id>', methods=['GET', 'POST'])
 def update_post(post_id):
     post = BlogPost.query.get_or_404(post_id)
