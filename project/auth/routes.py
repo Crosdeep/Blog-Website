@@ -1,6 +1,5 @@
-from flask import Flask, render_template, redirect, url_for, flash, request, Blueprint
+from flask import Flask, render_template, redirect, url_for, flash
 from flask_migrate import Migrate
-from flask_mail import Mail, Message
 from flask_sqlalchemy import SQLAlchemy
 from flask_bcrypt import Bcrypt
 
@@ -113,4 +112,5 @@ def edit_profile():
     form.username.data = current_user.username
     form.email.data = current_user.email
     return render_template('edit_profile.html', form=form)
+
 
