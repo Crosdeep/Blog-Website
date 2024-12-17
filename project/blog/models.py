@@ -27,7 +27,7 @@ class BlogPost(db.Model):
     def __repr__(self):
         return f'<BlogPost {self.id}>'
 
-class Favorites(db.Model, FlaskForm):
+class Favorites(db.Model):
     __tablename__ = "favorites"
     id = db.Column(db.Integer, primary_key=True)
     user_id = db.Column(db.Integer)

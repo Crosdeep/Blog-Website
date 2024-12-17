@@ -1,6 +1,7 @@
 from project import db
 
 
+
 class EditCategories(db.Model):
     __tablename__ = 'categories'
 

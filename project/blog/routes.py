@@ -18,19 +18,20 @@ login_manager = LoginManager()
 login_manager.init_app(app)
 login_manager.login_view = 'login'  #Giriş yapmamış kullanıcıları yönlendirecek giriş sayfası
 
+from . import blog
 
 @login_manager.user_loader
 def load_user(user_id):
     return User.query.get(int(user_id))
 
-@app.route("/", methods=['POST','GET'])
+@blog.route("/", methods=['POST','GET'])
 def home():
     users = User.query.all()  #Kullanıcıları al
     blogs = BlogPost.query.all()  #Blogları al
     return render_template('home.html', users=users, blogs=blogs)
 
 
-@app.route("/create-blog", methods=['GET', 'POST'])
+@blog.route("/create-blog", methods=['GET', 'POST'])
 @login_required #Sadece giriş yapan kullanıcılar girebilir.
 def create_blog():
     form = CreateBlog()
@@ -52,7 +53,7 @@ def create_blog():
     return render_template('create_post.html', form=form)
 
 
-@app.route('/create-comment', methods=['POST','GET'])
+@blog.route('/create-comment', methods=['POST','GET'])
 @login_required
 def create_comment():
     form = CommentForm()
@@ -73,7 +74,7 @@ def create_comment():
     return render_template('create_comment.html', form=form)
 
 
-@app.route('/posts')
+@blog.route('/posts')
 def posts():
     form = CommentForm()
     if form.validate_on_submit():
@@ -89,7 +90,7 @@ def posts():
     all_posts = BlogPost.query.order_by(BlogPost.created_at.desc()).all()
     return render_template('posts.html', posts=all_posts, form=form)
 
-@app.route('/delete_post/<int:post_id>', methods=['POST'])
+@blog.route('/delete_post/<int:post_id>', methods=['POST'])
 def delete_post(post_id):
     post = BlogPost.query.get_or_404(post_id)
     db.session.delete(post)
@@ -103,7 +104,7 @@ def deleted_post():
     pass
 
 
-@app.route('/update_post/<int:post_id>', methods=['GET', 'POST'])
+@blog.route('/update_post/<int:post_id>', methods=['GET', 'POST'])
 def update_post(post_id):
     post = BlogPost.query.get_or_404(post_id)
     form = UpdatePostForm()
@@ -120,7 +121,7 @@ def update_post(post_id):
 
 
 
-@app.route("/forum", methods=['GET', 'POST'])
+@blog.route("/forum", methods=['GET', 'POST'])
 def forum():
     form = CommentForm()
 
@@ -138,7 +139,7 @@ def forum():
     return render_template('forum.html', forums=forums, form=form)
 
 
-@app.route("/view-post/<int:post_id>", methods=['GET','POST'])
+@blog.route("/view-post/<int:post_id>", methods=['GET','POST'])
 def view_post(post_id):
     post = BlogPost.query.get_or_404(post_id)
     post.view_count += 1
@@ -147,7 +148,7 @@ def view_post(post_id):
     return render_template('post_detail.html', post=post)
 
 
-@app.route("/favorite/<int:post_id>", methods=['GET','POST'])
+@blog.route("/favorite/<int:post_id>", methods=['GET','POST'])
 def favorites(post_id):
     post = BlogPost.query.get_or_404(post_id)
     favorite = user_id=current_user.id, post_id=post.id
@@ -157,7 +158,7 @@ def favorites(post_id):
     return redirect(url_for('post_detail', post_id=post.id))
 
 
-@app.route('/favorite/<int:post_id>', methods=['POST'])
+@blog.route('/favorite/<int:post_id>', methods=['POST'])
 def favorite_post(post_id):
     post = BlogPost.query.get_or_404(post_id)
     #kullanıcının bu postu favorileyip favorilemediğini kontrol et
@@ -169,7 +170,7 @@ def favorite_post(post_id):
         db.session.commit()
     return redirect(url_for('post_detail', post_id=post.id))
 
-@app.route("/populer-posts")
+@blog.route("/populer-posts")
 def populer_posts():
     populer_posts = BlogPost.query.order_by(BlogPost.view_count.desc()).limit(10).all()
     return render_template('populer_posts.html', populer_posts=populer_posts)
@@ -182,7 +183,7 @@ def view_forum(forum_id):
     return render_template('view_forum.html', forum=forum)
 
 
-@app.route("/contact", methods=['GET','POST'])
+@blog.route("/contact", methods=['GET','POST'])
 @login_required
 def contact():
     form = ContactForm()

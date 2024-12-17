@@ -1,20 +1,18 @@
-from flask import Flask, render_template, redirect, url_for, flash
+from flask import render_template, redirect, url_for, flash
 from flask_migrate import Migrate
-from project import db
 from flask_bcrypt import Bcrypt
 from project import db, app
 
 
 bcrypt = Bcrypt
-db.init_app(app)
 migrate = Migrate(app, db)
-
 
 from project.auth.models import User
 from project.auth.forms import UserRegister, UserLogin, UserProfileForm
 from project.blog.models import BlogPost, Comment
 from flask_login import LoginManager
 
+from . import auth
 
 login_manager = LoginManager()
 login_manager.init_app(app)
@@ -24,7 +22,7 @@ login_manager.login_view = 'login'  #Giriş yapmamış kullanıcıları yönlend
 def load_user(user_id):
     return User.query.get(int(user_id))
 
-@app.route("/", methods=['POST','GET'])
+@auth.route("/", methods=['POST','GET'])
 def home():
     users = User.query.all()  # Kullanıcıları al
     blogs = BlogPost.query.all()  # Blogları al
@@ -33,7 +31,7 @@ def home():
 
 from flask_login import LoginManager, login_required, current_user, login_user, logout_user
 
-@app.route('/login', methods=['GET', 'POST'])
+@auth.route('/login', methods=['GET', 'POST'])
 def login():
     if current_user.is_authenticated:
         return redirect(url_for('home'))
@@ -51,7 +49,7 @@ def login():
 
     return render_template('login.html', form=form)
 
-@app.route("/profile")
+@auth.route("/profile")
 @login_required
 def profile():
     form = UserProfileForm()
@@ -65,7 +63,7 @@ def profile():
     return render_template('profile.html', form=form, user=current_user)
 
 
-@app.route("/logout")
+@auth.route("/logout")
 @login_required
 def logout():
     logout_user()  #Kullanıcıyı çıkış yaptırıyoruz
@@ -73,7 +71,7 @@ def logout():
     return redirect(url_for('home'))
 
 
-@app.route("/register", methods=['GET', 'POST'])
+@auth.route("/register", methods=['GET', 'POST'])
 def register():
     form = UserRegister()
     if form.validate_on_submit():
@@ -93,7 +91,7 @@ def register():
     return render_template('register.html', form=form)
 
 
-@app.route('/edit_profile', methods=['GET', 'POST'])
+@auth.route('/edit_profile', methods=['GET', 'POST'])
 @login_required
 def edit_profile():
     form = UserProfileForm()
