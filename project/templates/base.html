@@ -21,32 +21,32 @@
                 <ul class="navbar-nav ms-auto">
                     {% if current_user.is_authenticated %}
                         <li class="nav-item">
-                            <a class="nav-link" href="{{ url_for('profile') }}">Profil</a>
+                            <a class="nav-link" href="{{ url_for('auth.profile') }}">Profil</a>
                         </li>
                         <li class="nav-item">
-                            <a class="nav-link" href="{{ url_for('create_blog') }}">Blog Yaz</a>
+                            <a class="nav-link" href="{{ url_for('blog.create_blog') }}">Blog Yaz</a>
                         </li>
                         <li class="nav-item">
-                            <a class="nav-link" href="{{ url_for('forum') }}">Forum</a>
+                            <a class="nav-link" href="{{ url_for('blog.forum') }}">Forum</a>
                         </li>
                         <li class="nav-item">
-                            <a class="nav-link" href="{{ url_for('posts') }}">Post</a>
+                            <a class="nav-link" href="{{ url_for('blog.posts') }}">Post</a>
                         </li>
                         <li class="nav-item">
-                            <a class="nav-link" href="{{ url_for('create_comment') }}">Soru Sor</a>
+                            <a class="nav-link" href="{{ url_for('blog.create_comment') }}">Soru Sor</a>
                         </li>
                         <li class="nav-item">
-                            <a class="nav-link" href="{{ url_for('contact') }}">İletişim</a>
+                            <a class="nav-link" href="{{ url_for('blog.contact') }}">İletişim</a>
                         </li>
                         <li class="nav-item">
-                            <a class="nav-link" href="{{ url_for('logout') }}">Çıkış Yap</a>
+                            <a class="nav-link" href="{{ url_for('auth.logout') }}">Çıkış Yap</a>
                         </li>
                     {% else %}
                         <li class="nav-item">
-                            <a class="nav-link" href="{{ url_for('login') }}">Giriş Yap</a>
+                            <a class="nav-link" href="{{ url_for('auth.login') }}">Giriş Yap</a>
                         </li>
                         <li class="nav-item">
-                            <a class="nav-link" href="{{ url_for('register') }}">Kayıt Ol</a>
+                            <a class="nav-link" href="{{ url_for('auth.register') }}">Kayıt Ol</a>
                         </li>
                     {% endif %}
                 </ul>

@@ -1,28 +1,18 @@
 from functools import wraps
-from flask import url_for, flash, redirect, g, render_template
+from flask import url_for, flash, redirect, g, render_template, session
 from project.auth.models import User
 from project.blog.models import BlogPost, Comment
 from project import db, app
 
 from . import admin
 
-def admin_required():
+def admin_required(f):
     @wraps(f)
     def decorated_function(*args, **kwargs):
-        #Kullanıcı oturumunda role kontrolü
-        if not g.User:
-            flash('Lütfen giriş yapın', 'danger')
-            return redirect(url_for('auth.login')), 404
-
-        #Kullanıcı bilgilerini veritabanından kontrol et
-        user = User.query.filter_by(id=g.User.id).first()
-
-        if not user or user.role != 'admin':
-            flash('Yetkiniz yok', 'danger')
-            return redirect(url_for('auth.login'))
-        return f(*args, **kwargs)
-
-    return decorated_function()
+        if not session.get('is_admin'):  # Admin kontrolü
+            return redirect(url_for('auth.login'))  # Admin değilse giriş sayfasına yönlendir
+        return f(*args, **kwargs)  # Admin ise fonksiyonu çalıştır
+    return decorated_function
 
 
 from .models import EditCategories

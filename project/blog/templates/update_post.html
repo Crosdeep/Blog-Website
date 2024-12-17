@@ -3,7 +3,7 @@
 {% block content %}
 <div class="container mt-5">
     <h2>Post Güncelle</h2>
-    <form method="POST">
+    <form method="post">
         {{ form.hidden_tag() }} <!-- CSRF Token -->
         <div class="form-group mb-3">
             <label for="title">Başlık</label>
@@ -14,7 +14,7 @@
             {{ form.description(class="form-control") }}
         </div>
         <button type="submit" class="btn btn-primary">Kaydet</button>
-        <a href="{{ url_for('posts') }}" class="btn btn-secondary">İptal</a>
+        <a href="{{ url_for('blog.posts') }}" class="btn btn-secondary">İptal</a>
     </form>
 </div>
 {% endblock %}

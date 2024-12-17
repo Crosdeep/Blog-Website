@@ -1,3 +1,4 @@
+
 from flask import render_template, redirect, url_for, flash
 from flask_migrate import Migrate
 from flask_bcrypt import Bcrypt
@@ -9,7 +10,6 @@ migrate = Migrate(app, db)
 
 from project.auth.models import User
 from project.auth.forms import UserRegister, UserLogin, UserProfileForm
-from project.blog.models import BlogPost, Comment
 from flask_login import LoginManager
 
 from . import auth
@@ -22,14 +22,8 @@ login_manager.login_view = 'login'  #Giriş yapmamış kullanıcıları yönlend
 def load_user(user_id):
     return User.query.get(int(user_id))
 
-@auth.route("/", methods=['POST','GET'])
-def home():
-    users = User.query.all()  # Kullanıcıları al
-    blogs = BlogPost.query.all()  # Blogları al
-    comments = Comment.query.all()  # Yorumları al
-    return render_template('home.html', users=users, blogs=blogs, comments=comments)
 
-from flask_login import LoginManager, login_required, current_user, login_user, logout_user
+from flask_login import login_required, current_user, login_user, logout_user
 
 @auth.route('/login', methods=['GET', 'POST'])
 def login():
@@ -54,7 +48,7 @@ def login():
 def profile():
     form = UserProfileForm()
     if form.validate_on_submit():
-        # Form verilerini işleme
+        #Form verilerini işleme
         current_user.username = form.username.data
         current_user.email = form.email.data
         db.session.commit()

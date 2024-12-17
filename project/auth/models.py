@@ -4,6 +4,7 @@ from flask_bcrypt import Bcrypt
 from datetime import datetime
 from project import db
 
+
 bcrypt = Bcrypt()
 
 

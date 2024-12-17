@@ -1,15 +1,14 @@
-from project import db
 from flask_bcrypt import Bcrypt
 from datetime import datetime
-from flask_wtf import FlaskForm
 from sqlalchemy import ForeignKey
+from project import db
 
 bcrypt = Bcrypt()
 
 
-#BlogPost modelinin tanımı
+# BlogPost modelinin tanımı
 class BlogPost(db.Model):
-    __tablename__ = 'blog_posts'  #Tablo adı
+    __tablename__ = 'blog_posts'  # Tablo adı
     id = db.Column(db.Integer, primary_key=True)
     title = db.Column(db.String(100), nullable=False)
     task = db.Column(db.String(150), nullable=False)
@@ -19,35 +18,37 @@ class BlogPost(db.Model):
     favorites_count = db.Column(db.Integer, default=0)
     user_id = db.Column(db.Integer, db.ForeignKey('users.id'), nullable=False)
     user = db.relationship('User', backref=db.backref('posts', lazy=True))
-    categori = db.Column(db.String(50), ForeignKey('EditCategories.id'), nullable=False)
+    # ForeignKey kullanarak ilişkili kategoriyi belirtiriz
+    categori_id = db.Column(db.Integer, db.ForeignKey('categories.id'))
+    # 'back_populates' ile EditCategories ile ilişkiyi belirtiriz
+    categori = db.relationship('EditCategories', back_populates='posts')
 
-    #BlogPost'a ait yorumlar (comments)
-    comments = db.relationship('Comment', backref='blog_posts', lazy=True)
+
+    # BlogPost'a ait yorumlar (comments)
+    comments = db.relationship('Comment', backref='blog_post', lazy=True)
 
     def __repr__(self):
         return f'<BlogPost {self.id}>'
 
+
+# Favorites modelinin tanımı
 class Favorites(db.Model):
     __tablename__ = "favorites"
     id = db.Column(db.Integer, primary_key=True)
-    user_id = db.Column(db.Integer)
-    post_id = db.Column(db.Integer, db.ForeignKey('post.id'), nullable=False)
+    user_id = db.Column(db.Integer, db.ForeignKey('users.id'), nullable=False)  # 'users' tablosuna referans
+    post_id = db.Column(db.Integer, db.ForeignKey('blog_posts.id'), nullable=False)  # 'blog_posts' tablosuna referans
+
+    def __repr__(self):
+        return f"<Favorite {self.id}>"
 
 
 # Comment modelinin tanımı
 class Comment(db.Model):
     __tablename__ = 'comments'  # Tablo adı
     id = db.Column(db.Integer, primary_key=True)
-    user_id = db.Column(db.Integer, ForeignKey('blog_posts.user_id'))
     content = db.Column(db.String(200), nullable=False)
-    #description = db.Column(db.Text, nullable=False)
     created_at = db.Column(db.DateTime, default=datetime.utcnow)
-
-    # Foreign key: Comment post_id, BlogPost id ile ilişkilendiriliyo
-    post_id = db.Column(db.Integer, db.ForeignKey('blog_posts.id'), nullable=False)
-
-    def __repr__(self):
-        return f'<Comment {self.id}>'
+    blog_post_id = db.Column(db.Integer, db.ForeignKey('blog_posts.id'), nullable=False)  # BlogPost'a referans
 
 
 class Contact(db.Model):
