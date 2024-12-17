@@ -1,20 +1,14 @@
 from crypt import methods
-
-from flask import Flask, render_template, redirect, url_for, flash, request, Blueprint
-from flask_migrate import Migrate
-from flask_mail import Mail, Message
-from flask_sqlalchemy import SQLAlchemy
+from flask import render_template, redirect, url_for, flash, request, Blueprint
 from flask_bcrypt import Bcrypt
+from project import app, db, create_app
+from flask_migrate import Migrate
 
-db = SQLAlchemy()
+
 bcrypt = Bcrypt()
-
-app = Flask(__name__)
-db.init_app(app)
 migrate = Migrate(app, db)
 
 from project.auth.models import User
-from project.auth.forms import UserRegister, UserLogin, UserProfileForm
 from project.blog.forms import CreateBlog, ContactForm, CommentForm, UpdatePostForm
 from project.blog.models import BlogPost,Comment,Contact, Favorites
 from flask_login import LoginManager, login_required, current_user
@@ -31,10 +25,9 @@ def load_user(user_id):
 
 @app.route("/", methods=['POST','GET'])
 def home():
-    users = User.query.all()  # Kullanıcıları al
-    blogs = BlogPost.query.all()  # Blogları al
-    comments = Comment.query.all()  # Yorumları al
-    return render_template('home.html', users=users, blogs=blogs, comments=comments)
+    users = User.query.all()  #Kullanıcıları al
+    blogs = BlogPost.query.all()  #Blogları al
+    return render_template('home.html', users=users, blogs=blogs)
 
 
 @app.route("/create-blog", methods=['GET', 'POST'])
@@ -55,7 +48,7 @@ def create_blog():
             return redirect(url_for('posts'))
         else:
             flash('Giriş yapmanız gerekiyor.', 'danger')
-            return redirect(url_for('login'))  # Giriş sayfasına yönlendir
+            return redirect(url_for('login'))  #Giriş sayfasına yönlendir
     return render_template('create_post.html', form=form)
 
 
@@ -149,6 +142,7 @@ def forum():
 def view_post(post_id):
     post = BlogPost.query.get_or_404(post_id)
     post.view_count += 1
+
     db.session.commit()
     return render_template('post_detail.html', post=post)
 
@@ -201,4 +195,6 @@ def contact():
 
         return redirect(url_for("contact"))
     return render_template("contact.html", form=form)
+
+create_app()
 

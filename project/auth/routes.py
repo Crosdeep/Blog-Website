@@ -1,22 +1,19 @@
 from flask import Flask, render_template, redirect, url_for, flash
 from flask_migrate import Migrate
-from flask_sqlalchemy import SQLAlchemy
+from project import db
 from flask_bcrypt import Bcrypt
+from project import db, app
 
 
-app = Flask(__name__)
-db = SQLAlchemy()
 bcrypt = Bcrypt
-
 db.init_app(app)
 migrate = Migrate(app, db)
 
 
 from project.auth.models import User
 from project.auth.forms import UserRegister, UserLogin, UserProfileForm
-from project.blog.forms import CreateBlog,ContactForm,CommentForm
-from project.blog.models import BlogPost, Comment, Contact, bcrypt
-from flask_login import LoginManager, login_required, current_user
+from project.blog.models import BlogPost, Comment
+from flask_login import LoginManager
 
 
 login_manager = LoginManager()

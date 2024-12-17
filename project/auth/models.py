@@ -2,9 +2,9 @@ from flask_login import UserMixin
 from flask_sqlalchemy import SQLAlchemy
 from flask_bcrypt import Bcrypt
 from datetime import datetime
-from project.blog.models import BlogPost
+from project import db
 
-db = SQLAlchemy()
+
 bcrypt = Bcrypt()
 
 

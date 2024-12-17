@@ -1,22 +1,15 @@
-from email.policy import default
-from enum import unique
-
-from flask_login import UserMixin
-from flask_sqlalchemy import SQLAlchemy
+from project import db
 from flask_bcrypt import Bcrypt
 from datetime import datetime
-
 from flask_wtf import FlaskForm
 from sqlalchemy import ForeignKey
-from sqlalchemy.orm import backref
 
-db = SQLAlchemy()
 bcrypt = Bcrypt()
 
 
 #BlogPost modelinin tanımı
 class BlogPost(db.Model):
-    __tablename__ = 'blog_posts'  # Tablo adı
+    __tablename__ = 'blog_posts'  #Tablo adı
     id = db.Column(db.Integer, primary_key=True)
     title = db.Column(db.String(100), nullable=False)
     task = db.Column(db.String(150), nullable=False)
